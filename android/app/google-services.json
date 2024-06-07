@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1039856922322",
+    "project_id": "ids1-e0e23",
+    "storage_bucket": "ids1-e0e23.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039856922322:android:0a732e938bcd2c3491070b",
+        "android_client_info": {
+          "package_name": "com.CaFlCePu.app_10ids1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9Gij5vPOIHB8eo27_frEsnTXhmK6I5Nk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
