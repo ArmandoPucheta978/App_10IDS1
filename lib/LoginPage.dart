@@ -1,11 +1,12 @@
-import 'package:app_10ids1/ConsultoriosPage.dart';
-import 'package:app_10ids1/DoctoresPage.dart';
-import 'package:app_10ids1/HomePage.dart';
-import 'package:app_10ids1/MedicamentosPage.dart';
+import 'package:app_10ids1/CitaPage.dart';
+import 'package:app_10ids1/MenuAdministradorPage.dart';
+import 'package:app_10ids1/MenuDoctorPage.dart';
+import 'package:app_10ids1/MenuPacientePage.dart';
+import 'package:app_10ids1/RegisterPage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quickalert/quickalert.dart';
-//import 'package:http/http.dart' as http;
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -17,21 +18,40 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final txtUserController = TextEditingController();
   final txtPasswordController =TextEditingController();
-  //bool BtnVisible(true);
   Future<void> fnLogin() async {
     try{
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
+    DocumentSnapshot? doc;
 
     UserCredential userCredential = await auth.signInWithEmailAndPassword(email: txtUserController.text, password: txtPasswordController.text);
     user = userCredential.user;
 
     if (user != null){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const MedicamentosPage()));
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('usuarios').where('correo', isEqualTo: txtUserController.text).get();
+      doc = querySnapshot.docs.first;
+      var docId = doc.id;
+      var data = doc?.data() as Map<String, dynamic>?; // Convertir a Map<String, dynamic>
+      var rol = data != null && data.containsKey('rol') ? data['rol'] : 'Paciente';
+      var nombre = data != null && data.containsKey('rol') ? data['rol'] : 'Paciente';
+      if (rol == "Paciente"){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => MenuPacientePage(DocId:docId, Rol: rol, Nombre: nombre)));
+      } else if (rol == "Doctor"){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => MenuDoctorPage(DocId:docId, Rol: rol, Nombre: nombre)));
+      } else if (rol == "Administrador") {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => MenuAdministradorPage(DocId:docId, Rol: rol, Nombre: nombre)));
+      } else {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: 'Mensaje del sistema',
+          text: 'Error con el rol',
+        );
+      }
     } else {
       QuickAlert.show(
         context: context,
-        type: QuickAlertType.info,
+        type: QuickAlertType.error,
         title: 'Mensaje del sistema',
         text: 'Datos Incorrectos',
       );
@@ -51,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Login Page"),
+        title: const Text("Página de inicio de sesión"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -86,9 +106,13 @@ class _LoginPageState extends State<LoginPage> {
               fnLogin();
             },
                 child: const Text("accesar")),
+            TextButton(onPressed:() {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
+            }, child: const Text("No tienes una cuenta? Registrarse"))
           ],
         ),
       ),
+
     );
   }
 }
