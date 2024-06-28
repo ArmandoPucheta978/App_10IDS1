@@ -19,7 +19,6 @@ class _MenuDoctorPageState extends State<MenuDoctorPage> {
       appBar: AppBar(
         title: Text("Citas Asignadas"),
       ),
-
     );
   }
 }

@@ -41,15 +41,15 @@ class _MuseosPageState extends State<DoctoresPage> {
 
                 return ListTile(
                   leading: const Icon(Icons.business),
-                  title: Text(doc["nombre"]),
-                  subtitle: Text(doc["matricula"]),
+                  title: Text(doc["Nombre"]),
+                  subtitle: Text(doc["Matricula"]),
                   onTap: () async {
                     final result = await Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) =>
                           DoctorPage(docId: doc.id,
-                              Nombre: doc["nombre"],
-                              Matricula: doc["matricula"])),
+                              Nombre: doc["Nombre"],
+                              Matricula: doc["Matricula"])),
                     );
                     if (result == 'saved') {
                       ScaffoldMessenger.of(context).showSnackBar(

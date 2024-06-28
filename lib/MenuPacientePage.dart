@@ -101,7 +101,7 @@ class _MenuPacientePageState extends State<MenuPacientePage> {
           );
           if (result == 'saved') {
             ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Medicamento guardado con éxito'))
+                SnackBar(content: Text('Cita guardada con éxito'))
             );
                 setState(() {});
           }

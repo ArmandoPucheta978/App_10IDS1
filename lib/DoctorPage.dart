@@ -41,14 +41,14 @@ class _DoctorPageState extends State<DoctorPage> {
       if (widget.docId == null) {
         // Crear
         await FirebaseFirestore.instance.collection('doctores').add({
-          'matricula': _matriculaController.text,
-          'nombre': _nombreController.text,
+          'Matricula': _matriculaController.text,
+          'Nombre': _nombreController.text,
         });
       } else {
         // Actualizar
         await FirebaseFirestore.instance.collection('doctores').doc(widget.docId).update({
-          'matricula': _matriculaController.text,
-          'nombre': _nombreController.text,
+          'Matricula': _matriculaController.text,
+          'Nombre': _nombreController.text,
         });
       }
       Navigator.pop(context, 'saved');
