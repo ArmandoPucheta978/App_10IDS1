@@ -15,32 +15,6 @@ class CitasPage extends StatefulWidget {
 }
 
 class _CitasPageState extends State<CitasPage> {
-  Future<List<Map<String, dynamic>>> _getAppointmentsWithDetails() async {
-    // Consulta la colección de usuarios para obtener el documento del usuario
-    QuerySnapshot usuarios = await FirebaseFirestore.instance.collection('usuarios').get();
-
-    // Consulta la colección de citas para obtener las citas del usuario
-    QuerySnapshot appointmentSnapshot = await FirebaseFirestore.instance
-        .collection('citas')
-        .get();
-
-    List<Map<String, dynamic>> appointmentDetails = [];
-
-    for (var appointmentDoc in appointmentSnapshot.docs) {
-      // Obtener referencia a la especialidad
-      DocumentReference specialtyRef = appointmentDoc['EspecialidadRef'];
-
-      // Obtener detalles de la especialidad
-      DocumentSnapshot specialtyDoc = await specialtyRef.get();
-
-      appointmentDetails.add({
-        'appointment': appointmentDoc.data(),
-        'specialty': specialtyDoc.data(),
-      });
-    }
-
-    return appointmentDetails;
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

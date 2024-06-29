@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
       var docId = doc.id;
       var data = doc?.data() as Map<String, dynamic>?; // Convertir a Map<String, dynamic>
       var rol = data != null && data.containsKey('rol') ? data['rol'] : 'Paciente';
-      var nombre = data != null && data.containsKey('rol') ? data['rol'] : 'Paciente';
+      var nombre = data != null && data.containsKey('nombre') ? data['nombre'] : 'Usuario';
       if (rol == "Paciente"){
         Navigator.push(context, MaterialPageRoute(builder: (context) => MenuPacientePage(DocId:docId, Rol: rol, Nombre: nombre)));
       } else if (rol == "Doctor"){
